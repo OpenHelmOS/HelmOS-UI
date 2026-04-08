@@ -7,6 +7,7 @@ import helmosOfflineStyle from "./styles/Helmos_offline_style.json";
 import { TopHud } from "../hud/TopHud";
 import { BottomLeftInfo } from "../hud/BottomLeftInfo";
 import { CenterCrosshair } from "../hud/CenterCrosshair";
+import { ZoomControl } from "../hud/ZoomControl";
 
 export default function MapView() {
   
@@ -31,6 +32,8 @@ export default function MapView() {
       style: styleWithAbsoluteSprite,
       center: [25.53795, 61.0912],
       zoom: 12,
+
+      attributionControl: false,
     });
     
     const updateCenterFromScreen = () => {
@@ -66,6 +69,14 @@ export default function MapView() {
     mapRef.current = map;
   }, []);
 
+  const zoomIn = () => {
+    mapRef.current?.zoomIn({ animate: true });
+  };
+
+  const zoomOut = () => {
+    mapRef.current?.zoomOut({ animate: true });
+  };
+
   return (
     <>
       <div
@@ -80,6 +91,7 @@ export default function MapView() {
       <CenterCrosshair />
       <TopHud />
       <BottomLeftInfo lat={center.lat} lon={center.lon} />
+      <ZoomControl onZoomIn={zoomIn} onZoomOut={zoomOut} />
     </>
   );
 }

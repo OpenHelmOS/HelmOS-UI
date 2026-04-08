@@ -133,6 +133,11 @@
   bottom: 12px;
 }
 
+.bottom-right-box {
+  right: 12px;
+  bottom: 12px;
+}
+
 /* otsikko */
 .info-title {
   font-size: 11px;
@@ -147,3 +152,44 @@
   font-size: 14px;
   font-variant-numeric: tabular-nums;
 }
+
+/* ===== ZOOM CONTROL BOX ===== */
+
+.zoom-box {
+  transform: translateY(-50%);
+
+  display: flex;
+  padding: 0; /* jaetaan sisältä */
+}
+
+/* Painikkeet */
+.zoom-btn {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  font-weight: 300;
+  color: #ffffff;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+  pointer-events: auto; /* tärkeä: HUD muuten pointer-events: none */
+
+  transition: background-color 0.15s ease;
+}
+
+.zoom-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Jakoviiva keskelle */
+.zoom-btn + .zoom-btn {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+

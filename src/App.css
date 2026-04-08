@@ -191,3 +191,154 @@
     border-right-color: var(--border);
   }
 }
+
+/* ===== BOTTOM BAR ===== */
+
+.bottom-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hud-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+
+  height: 36px;
+  padding: 0 14px;
+
+  display: flex;                 /* ✅ FLEX */
+  align-items: center;
+  justify-content: space-between; /* ✅ vasen / oikea */
+
+  border-radius: 12px;
+
+  background-color: rgba(20, 24, 30, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+
+  pointer-events: none;
+}
+
+/* sininen gradienttireuna */
+.hud-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 170, 255, 0.6),
+    rgba(0, 170, 255, 0.15)
+  );
+
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+
+  pointer-events: none;
+}
+
+/* ===== SISÄLTÖ ===== */
+
+/* Vasen ja oikea normaaleja */
+.bottom-bar-left,
+.bottom-bar-right-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ✅ TÄMÄ RATKAISEE ONGELMAN */
+.bottom-bar-center-absolute {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  opacity: 0.9;
+
+  pointer-events: none;
+}
+
+.bottom-bar-left {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.bottom-bar-center {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.bottom-bar-right {
+  font-size: 14px;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  pointer-events: auto;
+  opacity: 0.75;
+}
+
+.bottom-bar-right:hover {
+  opacity: 1;
+}
+
+.bottom-bar-right-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.bottom-bar-attrib {
+  font-size: 11px;
+  opacity: 0.75;
+  white-space: nowrap;
+
+  /* kevyt “ilmestyminen” */
+  animation: attrib-fade-in 120ms ease-out;
+}
+
+@keyframes attrib-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(4px);
+  }
+  to {
+    opacity: 0.75;
+    transform: translateX(0);
+  }
+}
+
+
