@@ -257,3 +257,10 @@ code {
     @apply bg-background text-foreground;}
   html {
     @apply font-sans;}}
+
+  
+:root {
+  --bottom-bar-height: 36px;
+  --bottom-bar-offset: 8px;
+  --hud-margin: 12px;
+}

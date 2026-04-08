@@ -2,24 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map, type StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-
 import helmosOfflineStyle from "./styles/Helmos_offline_style.json";
+
 import { TopHud } from "../hud/TopHud";
-import { BottomLeftInfo } from "../hud/BottomLeftInfo";
 import { CenterCrosshair } from "../hud/CenterCrosshair";
-import { ZoomControl } from "../hud/ZoomControl";
+import { LeftHudToggle } from "../hud/LeftHudToggle";
+import { RightHudToggle } from "../hud/RightHudToggle";
+import { BottomLeftGroup } from "../hud/BottomLeftGroup";
+import { BottomRightGroup } from "../hud/BottomRightGroup";
 
 export default function MapView() {
-  
-  const [center, setCenter] = useState({
-    lat: 0,
-    lon: 0,
-  });
-
   const mapRef = useRef<Map | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  const [center, setCenter] = useState({ lat: 0, lon: 0 });
+  const [leftHudOpen, setLeftHudOpen] = useState(true);
+  const [rightHudOpen, setRightHudOpen] = useState(true);
+
+  const onZoomIn = () => {
+    mapRef.current?.zoomIn({ animate: true });
+  };
+
+  const onZoomOut = () => {
+    mapRef.current?.zoomOut({ animate: true });
+  };
+
+   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
     const styleWithAbsoluteSprite = {
@@ -32,25 +40,17 @@ export default function MapView() {
       style: styleWithAbsoluteSprite,
       center: [25.53795, 61.0912],
       zoom: 12,
-
       attributionControl: false,
     });
-    
+
     const updateCenterFromScreen = () => {
-      if (!mapRef.current) return;
-
-      const map = mapRef.current;
-
-      // Hae kartan canvas
       const canvas = map.getCanvas();
       const rect = canvas.getBoundingClientRect();
 
-      // Ruudun keskikohta pikseleinä
-      const screenX = rect.width / 2;
-      const screenY = rect.height / 2;
-
-      // UNPROJECT -> lat/lon
-      const lngLat = map.unproject([screenX, screenY]);
+      const lngLat = map.unproject([
+        rect.width / 2,
+        rect.height / 2,
+      ]);
 
       setCenter({
         lat: lngLat.lat,
@@ -59,39 +59,35 @@ export default function MapView() {
     };
 
     map.on("move", updateCenterFromScreen);
-    map.on("load", updateCenterFromScreen);
-
     map.on("load", () => {
-      // Pakotetaan resize seuraavassa frameissa
-      requestAnimationFrame(() => map.resize());
+      requestAnimationFrame(() => {
+        map.resize();
+        updateCenterFromScreen();
+      });
     });
 
     mapRef.current = map;
   }, []);
 
-  const zoomIn = () => {
-    mapRef.current?.zoomIn({ animate: true });
-  };
-
-  const zoomOut = () => {
-    mapRef.current?.zoomOut({ animate: true });
-  };
-
   return (
-    <>
-      <div
-        ref={containerRef}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-        }}
-      />
+    <div className="map-view-root">
+      <div ref={containerRef} className="map-canvas" />
 
       <CenterCrosshair />
       <TopHud />
-      <BottomLeftInfo lat={center.lat} lon={center.lon} />
-      <ZoomControl onZoomIn={zoomIn} onZoomOut={zoomOut} />
-    </>
+
+      {/* LEFT HUD */}
+      <div className="hud-zone hud-zone-left">
+        {leftHudOpen && <BottomLeftGroup center={center} />}
+        <LeftHudToggle onToggle={() => setLeftHudOpen(v => !v)} />
+      </div>
+
+
+      {/* RIGHT HUD */}
+      <div className="hud-zone hud-zone-right">
+        {rightHudOpen && <BottomRightGroup onZoomIn={onZoomIn} onZoomOut={onZoomOut} />}
+        <RightHudToggle onToggle={() => setRightHudOpen(v => !v)} />
+      </div>
+    </div>
   );
 }

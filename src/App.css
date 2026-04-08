@@ -195,11 +195,10 @@
 /* ===== BOTTOM BAR ===== */
 
 .bottom-bar {
-  position: fixed;
+  position: absolute;
   left: 12px;
   right: 12px;
   bottom: 8px;
-  height: 36px;
 
   display: flex;
   align-items: center;
@@ -207,7 +206,7 @@
 }
 
 .hud-bar {
-  position: fixed;
+  position: absolute;
   left: 12px;
   right: 12px;
   bottom: 8px;
@@ -341,4 +340,28 @@
   }
 }
 
+/* ========== APP LAYOUT ========== */
 
+.app-layout {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows:
+    1fr   /* map + hud */
+}
+
+.app-main {
+  position: relative;
+  overflow: hidden;
+}
+
+.map-view-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.map-canvas {
+  position: fixed;
+  inset: 0;
+}

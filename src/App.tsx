@@ -6,11 +6,12 @@ import { BottomBar } from "./components/BottomBar";
 
 export default function App() {
   return (
-    <>
-      <MapView />
-      <BottomBar
-        version="0.1.0"
-      />
-    </>
+    <div className="app-layout">
+      <div className="app-main">
+        <MapView />
+      </div>
+
+      <BottomBar version="0.1.0" />
+    </div>
   );
 }
