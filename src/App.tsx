@@ -1,20 +1,8 @@
+import "./index.css";
+import "./hud.css";
+import "./App.css";
 import MapView from "./map/MapView";
 
-
-function App() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        overflow: "hidden"
-      }}
-    >
-      <MapView />
-    </div>
-  )
+export default function App() {
+  return <MapView />;
 }
-
-export default App
