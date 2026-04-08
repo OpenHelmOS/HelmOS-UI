@@ -1,11 +1,14 @@
 /* ===== TOP HUD BOX (MBUX Marine style) ===== */
 
 .top-hud-box {
-  position: fixed;
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
+}
 
+.hud-box {
+  position: fixed;
+ 
   padding: 10px 16px;
   border-radius: 14px;
 
@@ -27,7 +30,7 @@
   isolation: isolate;
 }
 
-.top-hud-box::before {
+.hud-box::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -123,28 +126,9 @@
   /* luettavuus kartan päällä */
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
 }
-.info-box {
-  position: fixed;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background-color: rgba(20, 24, 30, 0.6);
-  color: #ffffff;
-  pointer-events: none;
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
-  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
-
-  isolation: isolate;
-}
 
 /* sijoitus */
-.info-box.bottom-left {
+.bottom-left-box {
   left: 12px;
   bottom: 12px;
 }

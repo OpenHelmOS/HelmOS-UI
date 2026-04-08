@@ -3,7 +3,7 @@
 
 export function TopHud() {
   return (
-    <div className="top-hud-box">
+    <div className="hud-box top-hud-box">
       <div className="top-hud-heading">
         <span className="heading-value">273°</span>
         <span className="heading-label">NE</span>
