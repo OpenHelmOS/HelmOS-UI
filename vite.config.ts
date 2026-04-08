@@ -1,12 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
+  server: {
+    host: true,
+    headers: {
+      ".pbf": "application/x-protobuf"
+    }
+  },
+
   plugins: [
     react(),
-    tailwindcss(),
   ],
   resolve: {
     alias: {
