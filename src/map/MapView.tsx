@@ -6,18 +6,14 @@ import helmosOfflineStyle from "./styles/Helmos_offline_style.json";
 
 import { TopHud } from "../hud/TopHud";
 import { CenterCrosshair } from "../hud/CenterCrosshair";
-import { LeftHudToggle } from "../hud/LeftHudToggle";
-import { RightHudToggle } from "../hud/RightHudToggle";
-import { BottomLeftGroup } from "../hud/BottomLeftGroup";
-import { BottomRightGroup } from "../hud/BottomRightGroup";
+import { LeftHud } from "../hud/LeftHud";
+import { RightHud } from "../hud/RightHud";
 
 export default function MapView() {
   const mapRef = useRef<Map | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [center, setCenter] = useState({ lat: 0, lon: 0 });
-  const [leftHudOpen, setLeftHudOpen] = useState(true);
-  const [rightHudOpen, setRightHudOpen] = useState(true);
 
   const onZoomIn = () => {
     mapRef.current?.zoomIn({ animate: true });
@@ -77,17 +73,13 @@ export default function MapView() {
       <TopHud />
 
       {/* LEFT HUD */}
-      <div className="hud-zone hud-zone-left">
-        {leftHudOpen && <BottomLeftGroup center={center} />}
-        <LeftHudToggle onToggle={() => setLeftHudOpen(v => !v)} />
-      </div>
+      <LeftHud center={center} />
 
 
       {/* RIGHT HUD */}
-      <div className="hud-zone hud-zone-right">
-        {rightHudOpen && <BottomRightGroup onZoomIn={onZoomIn} onZoomOut={onZoomOut} />}
-        <RightHudToggle onToggle={() => setRightHudOpen(v => !v)} />
-      </div>
+      <RightHud onZoomIn={onZoomIn} onZoomOut={onZoomOut} />
+      
     </div>
+    
   );
 }
