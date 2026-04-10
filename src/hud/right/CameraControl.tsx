@@ -1,35 +1,39 @@
 type Props = {
-  onZoomIn: () => void;
-  onZoomOut: () => void;
+  isFollowing: boolean;
+  onFindBoat: () => void;
+  onToggleFollow: () => void;
 };
 
-export function ZoomControl({ onZoomIn, onZoomOut }: Props) {
+export function CameraControl({
+  isFollowing,
+  onFindBoat,
+  onToggleFollow,
+}: Props) {
   return (
     <div className="flex divide-x divide-white/10">
       <button
-        onClick={onZoomIn}
+        onClick={onFindBoat}
         className="
           px-4 py-3
           hover:bg-white/10
           active:bg-white/20
           min-w-[90px]
         "
-        aria-label="Zoom in"
       >
-        +
+        Find
       </button>
 
       <button
-        onClick={onZoomOut}
-        className="
+        onClick={onToggleFollow}
+        className={`
           px-4 py-3
+          min-w-[90px]
           hover:bg-white/10
           active:bg-white/20
-          min-w-[90px]
-        "
-        aria-label="Zoom out"
+          ${isFollowing ? "bg-white/20" : ""}
+        `}
       >
-        −
+        Follow
       </button>
     </div>
   );
